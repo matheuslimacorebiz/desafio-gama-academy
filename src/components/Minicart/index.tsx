@@ -6,7 +6,8 @@ import {
 } from '@mui/material';
 
 import MinicartItem from '../MinicartItem';
-import { CartItemType, PokeObjType } from '../../types';
+import { PokeObjType } from '../../types';
+import { useStyles } from './styles'
 
 type Props = {
     cartItems: PokeObjType[];
@@ -17,24 +18,31 @@ type Props = {
 const Minicart: React.FC<Props> = ({
     cartItems, addToCart, removeFromCart
 }) => {
-    return (
-        <Paper>
-            {cartItems.length === 0 ?
-                <Typography>Nenhum pokemon selecionado</Typography>
-                : null}
-            {cartItems.map((item) => (
-                <>
-                    <MinicartItem
-                        key={item.id}
-                        item={item}
-                        addToCart={addToCart}
-                        removeFromCart={removeFromCart}
-                    />
-                    <Divider variant="inset" component="li" />
-                </>
-            ))}
+    const classes = useStyles();
 
-        </Paper>
+    const calculateTotal = (items: PokeObjType[]) =>{
+        return items.reduce((acc, item) => acc + item.amount * item.base_experience, 0);
+    }
+    
+    return (
+        <>
+            {cartItems.length === 0 ?
+                <Typography sx={{ margin: 'auto' }} >Nenhum pokemon selecionado</Typography>
+                : <Typography variant='h6' textAlign='center'>Total R$ {calculateTotal(cartItems)}</Typography>}
+            <Paper sx={{ width: 300 }}>
+                {cartItems.map((item) => (
+                    <>
+                        <MinicartItem
+                            key={item.id}
+                            item={item}
+                            addToCart={addToCart}
+                            removeFromCart={removeFromCart}
+                        />
+                        <Divider className={classes.marker} variant="middle" component="li" />
+                    </>
+                ))}
+            </Paper>
+        </>
     )
 }
 

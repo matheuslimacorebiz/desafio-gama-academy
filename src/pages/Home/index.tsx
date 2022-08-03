@@ -6,7 +6,7 @@ import Minicart from '../../components/Minicart';
 import Header from '../../components/Header';
 import api from '../../services/api';
 
-import { PokeObjType, CartItemType } from '../../types';
+import { PokeObjType } from '../../types';
 
 const Home: React.FC = () => {
   const [cartOpen, setCartOpen] = useState(false);
@@ -44,6 +44,7 @@ const Home: React.FC = () => {
 
       return [...prev, { ...clickedItem, amount: 1 }];
     });
+    setCartOpen(true);
   };
 
   const handleRemoveFromCart = (id: number) => {
@@ -76,16 +77,18 @@ const Home: React.FC = () => {
           removeFromCart={handleRemoveFromCart}
         />
       </Drawer>
-      {pokemons?.map(
-        (pokemon, i: number) => (
-          <Grid item key={pokemon.id} xs={12} sm={4}>
-            <PokeCard
-              item={pokemon}
-              handleAddToCart={handleAddToCart}
-            />
-          </Grid>
-        )
-      )}
+      <div className='loja'>
+        {pokemons?.map(
+          (pokemon, i: number) => (
+            <Grid item key={pokemon.id} xs={12} sm={4}>
+              <PokeCard
+                item={pokemon}
+                handleAddToCart={handleAddToCart}
+              />
+            </Grid>
+          )
+        )}
+      </div>
     </>
   );
 }
