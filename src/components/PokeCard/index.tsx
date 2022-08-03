@@ -35,7 +35,8 @@ const PokeCard: React.FC<Props> = ({
             </Typography>
           </CardContent>
           <CardActions>
-            <Button 
+            <Button
+            color='success'
             onClick={() => handleAddToCart(item)}
             size="small" variant='contained'>Adicionar ao carrinho</Button>
           </CardActions>
